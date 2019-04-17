@@ -3,13 +3,15 @@ var artists;
 var prices;
 // A Table object
 var table;
+var numberPerGallery;
 
 function preload() {
   table = loadTable("Data/Data - Average Hammer Prices.csv", "header");
+  numberPerGallery = loadTable("Data/Number Sold Per Gallery.csv", "header");
 }
 
 function setup() {
-  createCanvas(800, 800);
+  createCanvas(950, 800);
   loadData();
 }
 
@@ -19,7 +21,13 @@ function loadData() {
 
   // The size of the array of Bubble objects is determined by the total number of rows in the CSV
   artists = []; 
-  prices = []
+  prices = [];
+  galleries = [];
+  cezanneSold =[];
+  gauguinSold =[];
+  monetSold = [];
+  pissaroSold = [];
+  sisleySold = [];
 
   // You can access iterate over all the rows in a table
   for (var i = 0; i < table.getRowCount(); i++) {
@@ -31,6 +39,26 @@ function loadData() {
     artists[i] = artist;
     prices[i] = price;
   }
+  for (var i = 0; i < numberPerGallery.getRowCount(); i++) {
+    var row = numberPerGallery.getRow(i);
+    print(row);
+    // You can access the fields via their column name (or index)
+    var gallery = row.get("Gallery");
+    var cezanne = row.get("Cezanne");
+    var gauguin = row.get("Gauguin");
+    var monet = row.get("Monet");
+    var pissaro = row.get("Pissaro");
+    var sisley = row.get("Sisley");
+    // Make a Bubble object out of the data read
+    galleries[i] = gallery;
+    cezanneSold[i] = cezanne;
+    gauguinSold[i] = gauguin;
+    print(gauguin);
+    monetSold[i] = monet;
+    pissaroSold[i] = pissaro;
+    sisleySold[i] = sisley;
+  }
+  print(galleries);
 
 }
 
@@ -46,11 +74,11 @@ function draw() {
     var leftMargin = 150;
 
     // X axis
-    var xLen = leftMargin + 400 + barWidth; 
+    var xLen = leftMargin + 450 + barWidth; 
     line(leftMargin, topMargin + plotHeight, xLen, topMargin + plotHeight);
     // X axis label
     textAlign(LEFT);
-    text('Artist', 335, topMargin + plotHeight + 40);
+    text('Artist', leftMargin + 220, topMargin + plotHeight + 50);
     
     // ----------------------------------------------
 
@@ -89,62 +117,107 @@ function draw() {
     var pixelsPerDollar = (plotHeight - 30 * 2) / (200000);
 
     fill(0, 80, 0);
-    var sisleyHeight = pixelsPerDollar * prices[0] + 10;
-    var sisleyX = leftMargin + 75;
+    var sisleyHeight = pixelsPerDollar * prices[0] + 5;
+    var sisleyX = leftMargin + 375;
     rect(sisleyX, topMargin + plotHeight - sisleyHeight, barWidth, sisleyHeight);
     fill(0);
     text('Sisley', sisleyX - 5, topMargin + plotHeight + 20);
 
     fill(0, 128, 0);
-    var pissaroHeight = pixelsPerDollar * prices[1] + 7;
-    var pissaroX = leftMargin + 150;
+    var pissaroHeight = pixelsPerDollar * prices[1] + 2;
+    var pissaroX = leftMargin + 300;
     rect(pissaroX, topMargin + plotHeight - pissaroHeight, barWidth, pissaroHeight);
     fill(0);
-    text('Pissaro', pissaroX - 5, topMargin + plotHeight + 20);
+    text('Pissaro', pissaroX - 9, topMargin + plotHeight + 20);
     
     fill(0x29, 0xc4, 0x63);
-    var cezanneHeight = pixelsPerDollar * prices[2] + 17;
-    var cezanneX = leftMargin + 225;
+    var cezanneHeight = pixelsPerDollar * prices[2] + 20;
+    var cezanneX = leftMargin + 75;
     rect(cezanneX, topMargin + plotHeight - cezanneHeight, barWidth, cezanneHeight);
     fill(0);
-    text('Cezanne', cezanneX - 5, topMargin + plotHeight + 20);
+    text('Cézanne', cezanneX -10, topMargin + plotHeight + 20);
 
     fill(0x29, 0xc4, 0x63);
     var gauguinHeight = pixelsPerDollar * prices[3] + 12;
-    var gauguinX = leftMargin + 300;
+    var gauguinX = leftMargin + 150;
     rect(gauguinX, topMargin + plotHeight - gauguinHeight, barWidth, gauguinHeight);
     fill(0);
-    text('Gauguin', gauguinX - 5, topMargin + plotHeight + 20);
+    text('Gauguin', gauguinX - 7, topMargin + plotHeight + 20);
+
+    fill(0x29, 0xc4, 0x63);
+    var monetHeight = pixelsPerDollar * prices[4] + 20;
+    var monetX = leftMargin + 225;
+    rect(monetX, topMargin + plotHeight - monetHeight, barWidth, monetHeight);
+    fill(0);
+    text('Monet', monetX - 5, topMargin + plotHeight + 20);
 
     fill(0);
+
+    if (mouseX >= monetX && 
+      mouseX <= monetX + barWidth &&
+      mouseY >= topMargin + plotHeight - monetHeight && 
+      mouseY <= topMargin + plotHeight) {
+
+      text("Average Hammer Price: $209,876.18", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 125);
+      text(galleries[0] + ": " + monetSold[0] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 100);
+      text(galleries[1] + ": " + monetSold[1] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 85);
+      text(galleries[2] + ": " + monetSold[2] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 70);
+      text(galleries[3] + ": " + monetSold[3] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 55);
+      text(galleries[4] + ": " + monetSold[4] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 40);
+      text(galleries[5] + ": " + monetSold[5] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 25);
+      }else 
 
     if (mouseX >= gauguinX && 
       mouseX <= gauguinX + barWidth &&
       mouseY >= topMargin + plotHeight - gauguinHeight && 
       mouseY <= topMargin + plotHeight) {
 
-      text("$119,595.74", gauguinX+3, topMargin + plotHeight - gauguinHeight - 10);
+      text("Average Hammer Price: $119,595.74", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 125);
+      text(galleries[0] + ": " + gauguinSold[0] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 100);
+      text(galleries[1] + ": " + gauguinSold[1] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 85);
+      text(galleries[2] + ": " + gauguinSold[2] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 70);
+      text(galleries[3] + ": " + gauguinSold[3] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 55);
+      text(galleries[4] + ": " + gauguinSold[4] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 40);
+      text(galleries[5] + ": " + gauguinSold[5] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 25);
   } else 
   if (mouseX >= cezanneX && 
       mouseX <= cezanneX + barWidth &&
       mouseY >= topMargin + plotHeight - cezanneHeight && 
       mouseY <= topMargin + plotHeight) {
 
-      text("$175,906.51", cezanneX+3, topMargin + plotHeight - cezanneHeight - 10);
+      text("Average Hammer Price: $175,906.51", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 125);
+      text(galleries[0] + ": " + cezanneSold[0] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 100);
+      text(galleries[1] + ": " + cezanneSold[1] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 85);
+      text(galleries[2] + ": " + cezanneSold[2] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 70);
+      text(galleries[3] + ": " + cezanneSold[3] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 55);
+      text(galleries[4] + ": " + cezanneSold[4] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 40);
+      text(galleries[5] + ": " + cezanneSold[5] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 25);
   } else 
   if (mouseX >= pissaroX && 
       mouseX <= pissaroX + barWidth &&
       mouseY >= topMargin + plotHeight - pissaroHeight && 
       mouseY <= topMargin + plotHeight) {
 
-      text("$47,255", pissaroX+3, topMargin + plotHeight - pissaroHeight - 10);
+        text("Average Hammer Price: $47,255.68", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 125);
+        text(galleries[0] + ": " + pissaroSold[0] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 100);
+        text(galleries[1] + ": " + pissaroSold[1] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 85);
+        text(galleries[2] + ": " + pissaroSold[2] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 70);
+        text(galleries[3] + ": " + pissaroSold[3] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 55);
+        text(galleries[4] + ": " + pissaroSold[4] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 40);
+        text(galleries[5] + ": " + pissaroSold[5] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 25);
   } else 
   if (mouseX >= sisleyX && 
       mouseX <= sisleyX + barWidth &&
       mouseY >= topMargin + plotHeight - sisleyHeight && 
       mouseY <= topMargin + plotHeight) {
 
-      text("$99,023", sisleyX+3, topMargin + plotHeight - sisleyHeight - 10);
+      text("Average Hammer Price: $99,023.70", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 125);
+      text(galleries[0] + ": " + sisleySold[0] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 100);
+      text(galleries[1] + ": " + sisleySold[1] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 85);
+      text(galleries[2] + ": " + sisleySold[2] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 70);
+      text(galleries[3] + ": " + sisleySold[3] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 55);
+      text(galleries[4] + ": " + sisleySold[4] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 40);
+      text(galleries[5] + ": " + sisleySold[5] + " Pieces Sold", sisleyX + 100, topMargin + plotHeight - sisleyHeight - 25);
   }
   }
     
