@@ -11,7 +11,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(950, 800);
+  createCanvas(950, 650);
   loadData();
 }
 
@@ -63,7 +63,7 @@ function loadData() {
 }
 
 function draw() {
-    background(255);
+    background(216, 148, 21);
 
     var barWidth = 20;
     var barSpacing = 5;
@@ -79,6 +79,7 @@ function draw() {
     // X axis label
     textAlign(LEFT);
     text('Artist', leftMargin + 220, topMargin + plotHeight + 50);
+    text('Impressionist Artists Whose Works Fell Victim to Nazi Looting, and Their Re-emergence Across Post-war Markets (1945-1985)', leftMargin -75, topMargin + plotHeight + 100);
     
     // ----------------------------------------------
 
@@ -88,7 +89,7 @@ function draw() {
     angleMode(DEGREES);
     rotate(-90);
     textAlign(CENTER);
-    text('Average Hammer Price of Artwork ($)', 0 - (topMargin + plotHeight/2), leftMargin - 75);
+    text('Average Hammer Price of Artwork (USD)', 0 - (topMargin + plotHeight/2), leftMargin - 75);
     rotate(90);
 
     // Y axis ticks
@@ -116,35 +117,35 @@ function draw() {
     textAlign(LEFT);
     var pixelsPerDollar = (plotHeight - 30 * 2) / (200000);
 
-    fill(0, 80, 0);
+    fill(19, 247, 34);
     var sisleyHeight = pixelsPerDollar * prices[0] + 5;
     var sisleyX = leftMargin + 375;
     rect(sisleyX, topMargin + plotHeight - sisleyHeight, barWidth, sisleyHeight);
     fill(0);
     text('Sisley', sisleyX - 5, topMargin + plotHeight + 20);
 
-    fill(0, 128, 0);
+    fill(20, 183, 216);
     var pissaroHeight = pixelsPerDollar * prices[1] + 2;
     var pissaroX = leftMargin + 300;
     rect(pissaroX, topMargin + plotHeight - pissaroHeight, barWidth, pissaroHeight);
     fill(0);
-    text('Pissaro', pissaroX - 9, topMargin + plotHeight + 20);
+    text('Pissarro', pissaroX - 9, topMargin + plotHeight + 20);
     
-    fill(0x29, 0xc4, 0x63);
+    fill(90, 88, 226);
     var cezanneHeight = pixelsPerDollar * prices[2] + 20;
     var cezanneX = leftMargin + 75;
     rect(cezanneX, topMargin + plotHeight - cezanneHeight, barWidth, cezanneHeight);
     fill(0);
     text('Cézanne', cezanneX -10, topMargin + plotHeight + 20);
 
-    fill(0x29, 0xc4, 0x63);
+    fill(232, 84, 25);
     var gauguinHeight = pixelsPerDollar * prices[3] + 12;
     var gauguinX = leftMargin + 150;
     rect(gauguinX, topMargin + plotHeight - gauguinHeight, barWidth, gauguinHeight);
     fill(0);
     text('Gauguin', gauguinX - 7, topMargin + plotHeight + 20);
 
-    fill(0x29, 0xc4, 0x63);
+    fill(0, 80, 0);
     var monetHeight = pixelsPerDollar * prices[4] + 20;
     var monetX = leftMargin + 225;
     rect(monetX, topMargin + plotHeight - monetHeight, barWidth, monetHeight);
